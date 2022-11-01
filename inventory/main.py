@@ -1,41 +1,60 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from inventory_models import Products
+from redis_om import get_redis_connection, HashModel
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins = ['http://localhost:3000/'],
-    allow_methods = ["*"],
-    allow_headers = ["*"]
+    allow_origins=['http://localhost:3000'],
+    allow_methods=['*'],
+    allow_headers=['*']
 )
 
-@app.get("/")
-async def read_root():
-    return {"Hello": "World"}
-  
-@app.get("/products")
-def all():
-    return [format(i) for i in Products.all_pks()]
+redis = get_redis_connection(
+    host = "redis-12507.c305.ap-south-1-1.ec2.cloud.redislabs.com",
+    port = 12507,
+    password = "3BWvoODitSgRGylEa0ctRixV66JkuZFt",
+    decode_responses = True
+)
 
-def format(pk):
-    product = Products.get(pk)
+
+
+class Product(HashModel):
+    name: str
+    price: float
+    quantity: int
+
+    class Meta:
+        database = redis
+
+
+@app.get('/products')
+def all():
+    return [format(pk) for pk in Product.all_pks()]
+
+
+def format(pk: str):
+    product = Product.get(pk)
+
     return {
-        "id" : product.pk,
-        "name" : product.name,
-        "price" : product.price,
-        "quantity" : product.quantity  
+        'id': product.pk,
+        'name': product.name,
+        'price': product.price,
+        'quantity': product.quantity
     }
 
-@app.post("/create_product")
-def create(product : Products):
-    return product.save()
-    
-@app.get("/product/{pk}")
-def get(pk):
-    return Products.get(pk)
 
-@app.delete("/product/{pk}")
-def delete(pk):
-    return Products.delete(pk)
+@app.post('/products')
+def create(product: Product):
+    return product.save()
+
+
+@app.get('/products/{pk}')
+def get(pk: str):
+    return Product.get(pk)
+
+
+@app.delete('/products/{pk}')
+def delete(pk: str):
+    return Product.delete(pk)

@@ -1,28 +1,29 @@
-from itertools import product
+from main import redis, Product
 import time
-from dbconn import redis
-from inventory_models import Products
 
-key = "order_completed"
-group = "invenry_group"
+key = 'order_completed'
+group = 'inventory-group'
 
 try:
     redis.xgroup_create(key, group)
 except:
-    print("group already exists")
-    
+    print('Group already exists!')
+
 while True:
     try:
-        result = redis.xreadgroup(group , key, {key: ">"}, None)
-        print(result)
-        if result !=  []:
-            for res in result:
-                obj = res[1][0][1]
-                product = Products.get(obj['product_id'])
-                print(product)
-                product.quantity = int(product.quantity) - int(obj["quantity"])
-                product.save()
-    except Exception as e :
+        results = redis.xreadgroup(group, key, {key: '>'}, None)
+
+        if results != []:
+            print('Event Triggered')
+            for result in results:
+                obj = result[1][0][1]
+                try:
+                    product = Product.get(obj['product_id'])
+                    product.quantity = product.quantity - int(obj['quantity'])
+                    product.save()
+                except:
+                    redis.xadd('refund_order', obj, '*')
+
+    except Exception as e:
         print(str(e))
-    
     time.sleep(1)
