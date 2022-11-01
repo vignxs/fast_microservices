@@ -1,0 +1,22 @@
+{
+  "name": "fast_microservices",
+  "version": "1.0.0",
+  "description": "fast microservices",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vignxs/fast_microservices.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vignxs/fast_microservices/issues"
+  },
+  "homepage": "https://github.com/vignxs/fast_microservices#readme",
+  "dependencies": {
+    "faker": "^5.5.3"
+  }
+}
