@@ -4,6 +4,7 @@ import { Wrapper } from "./Wrapper";
 export const Orders = () => {
     const [id, setId] = useState('');
     const [quantity, setQuantity] = useState('');
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('Buy your favorite product');
 
@@ -28,7 +29,7 @@ export const Orders = () => {
 
         await fetch('http://localhost:8001/orders', {
             method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({
-                id, quantity, email
+                id, quantity, email, name
             })
         });
 
@@ -51,7 +52,12 @@ export const Orders = () => {
                                onChange={e => setId(e.target.value)}
                         />
                     </div>
-
+                    <div className="col-sm-6">
+                        <label className="form-label">Name</label>
+                        <input className="form-control"
+                            onChange={e => setName(e.target.value)}
+                        />
+                    </div>
                     <div className="col-sm-6">
                         <label className="form-label">Quantity</label>
                         <input type="number" className="form-control"

@@ -16,20 +16,26 @@ export const Wrapper = props => {
                     <div className="position-sticky pt-3">
                         <ul className="nav flex-column">
                             <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="#">
+                                <a className="nav-link active" aria-current="page" href="/">
+                                    Home
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link active" aria-current="page" href="/dashboard">
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link active" aria-current="page" href="/products">
                                     Products
                                 </a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="/Orders">
+                                <a className="nav-link active" aria-current="page" href="/orders">
                                     Orders
                                 </a>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="/Dashboard">
-                                    Dashboard
-                                </a>
-                            </li>
+                            
                         </ul>
                     </div>
                 </nav>
