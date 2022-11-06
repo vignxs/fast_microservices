@@ -1,0 +1,23 @@
+
+> inventory-frontend@0.1.0 start
+> react-scripts start
+
+Starting the development server...
+
+Compiled successfully!
+
+You can now view inventory-frontend in the browser.
+
+  Local:            http://localhost:3000
+  On Your Network:  http://192.168.0.119:3000
+
+Note that the development build is not optimized.
+To create a production build, use npm run build.
+
+assets by path [1m[32mstatic/js/*.js[39m[22m 2.05 MiB
+  asset [1m[32mstatic/js/bundle.js[39m[22m 2.04 MiB [1m[32m[emitted][39m[22m (name: main) 1 related asset
+  asset [1m[32mstatic/js/node_modules_web-vitals_dist_web-vitals_js.chunk.js[39m[22m 6.94 KiB [1m[32m[emitted][39m[22m 1 related asset
+asset [1m[32mindex.html[39m[22m 1.89 KiB [1m[32m[emitted][39m[22m
+asset [1m[32masset-manifest.json[39m[22m 458 bytes [1m[32m[emitted][39m[22m
+cached modules 1.88 MiB (javascript) 31.4 KiB (runtime) [1m[32m[cached][39m[22m 131 modules
+webpack 5.70.0 compiled [1m[32msuccessfully[39m[22m in 3894 ms

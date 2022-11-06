@@ -1,4 +1,3 @@
-from collections import Counter
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from redis_om import get_redis_connection, HashModel
@@ -29,19 +28,23 @@ class Product(HashModel):
     class Meta:
         database = redis
 
+
 def format2(pk: str):
     order = Product.get(pk)
-    return { 'Product': order.name, 'Count': order.quantity}
-    
+    return { 'Product': order.name, 'Count' : order.quantity}
+
+
 @app.get('/all_prods_count')
 def all():
     dicts = [format2(pk) for pk in Product.all_pks()]
-    prods = { x['Product']:0 for x in dicts}
-    
+    print(dicts)
+    prods = {x['Product']:0 for x in dicts}
+
     for i in dicts:
         if i['Product'] in prods:
             prods[i['Product']] += i['Count']
-    return dict(Counter(prods).most_common(5))
+    # print(months)
+    return prods
 
 @app.get('/products')
 def all():

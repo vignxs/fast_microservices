@@ -69,7 +69,7 @@ def all():
     for i in dicts:
         if i['Date'] in months:
             months[i['Date']] += i['Profit']
-    print(months)
+    # print(months)
     return months
     
 @app.get('/orders/{pk}')

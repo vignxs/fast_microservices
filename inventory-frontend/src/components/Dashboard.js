@@ -146,7 +146,7 @@ export const Dashboard = () => {
                     </div>
                 </div>
 
-                <div class="row" style={{ paddingBottom: '100px', paddingTop: '60px', paddingLeft:'135px' }}>
+                <div class="row" style={{ paddingBottom: '100px', paddingTop: '60px', paddingLeft:'100px' }}>
                     <div class="col-md">
                         <div>
                             <div class="card-body" style={{ paddingBottom: '500px',borderRadius: '8px', boxShadow: '0 4px 8px 0 rgba(0,0,0,.2), 0 0 6px rgba(0,0,0,.15)',width:'900px', height:'450px'}}>
