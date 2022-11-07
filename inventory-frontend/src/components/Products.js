@@ -10,6 +10,7 @@ export const Products = () => {
             const response = await fetch('http://localhost:8000/products');
             const content = await response.json();
             setProducts(content);
+            console.log(content)
         })();
     }, []);
 

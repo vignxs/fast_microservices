@@ -31,17 +31,14 @@ export const ProductsCreate = () => {
     return <Wrapper>
         
         <form className="mt-3" encType="multipart/form-data" onSubmit={submit}>
+
              <div className="form-floating pb-3">
-                 <input laceholder="Name"
-                       onChange={e => setName(e.target.value)}
-                />
+                <input className="form-control"  type='text' placeholder="Name"onChange={e => setName(e.target.value)}/>
                 <label>Name</label>
             </div>
-
+            
             <div className="form-floating pb-3">
-                <input type="number" className="form-control" placeholder="Price"
-                       onChange={e => setPrice(e.target.value)}
-                />
+                <input type="number" className="form-control" placeholder="Price" onChange={e => setPrice(e.target.value)}/>
                 <label>Price</label>
              </div>
 

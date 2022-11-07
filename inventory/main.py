@@ -1,4 +1,5 @@
 import json
+import shutil
 from fastapi import BackgroundTasks, Body, Depends, FastAPI, Form, Request, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, conint
@@ -8,6 +9,8 @@ import os
 from  PIL import Image
 import secrets
 from fastapi.staticfiles import StaticFiles
+import sys
+sys.path.append("..")
 
 app = FastAPI()
 os. getcwd()
@@ -76,32 +79,26 @@ def format(pk: str):
     }
     
     
-
-#name : Productimage =  Form(...) , file : UploadFile = File(...)) :
-@app.post('/products') #name: str = Body(...), price: int = Body(...), quantity: int =Body(...),
+@app.post('/products') 
 async def create( name: str = Body(...), price: int = Body(...), quantity: int =Body(...), file: UploadFile = File(...)):
-    print(file)
-    path = "./static/images"
-    print(file.content_type)
-    file_ext = file.filename.split(".")[1]
     
+    file_ext = file.filename.split(".")[1]
     token = secrets.token_hex(10)
-    generated_name = path + token + "." + file_ext 
-    print(generated_name)
+    generated_name = "./static/images/" + token + "." + file_ext 
     
     file_content = await file.read()
-    
-    with open(generated_name , "wb") as file:
+    path = "C:\\Users\hrint\Documents\FastApi\\fast_microservices\\inventory-frontend\\public\\images" #+token  #+ "." + file_ext
+    with open(generated_name  , "wb") as file:
         file.write(file_content)
-    
     img = Image.open(generated_name)
-    img = img.resize(size=(200,200))
+    img = img.resize(size=(300,300))
+    
     img.save(generated_name)
-    img_url = generated_name
+    img_url = "images/" + token + "." + file_ext
     file.close()
+    shutil.move(generated_name, path)
     product = Product( name=name, price=price, quantity=quantity, img_url=img_url )
     product.save()
-
 
 @app.get('/products/{pk}')
 def get(pk: str):
@@ -111,3 +108,17 @@ def get(pk: str):
 @app.delete('/products/{pk}')
 def delete(pk: str):
     return Product.delete(pk)
+
+@app.get('/products-listing')
+def all():
+    return [format_listing(pk) for pk in Product.all_pks()]
+
+def format_listing(pk: str):
+    product = Product.get(pk)
+
+    return {
+        'name': product.name,
+        'price': product.price,
+        'quantity': product.quantity,
+        "img_url" : product.img_url
+    }
