@@ -10,7 +10,9 @@ import React from 'react';
 function App() {
     return <BrowserRouter>
         <Routes>
-            <Route path="/products" element={<Products/>}/>
+            <Route path="/" element={<Wrapper />} />
+            <Route path="/products" element={<Wrapper />} />
+            <Route path="/products-list" element={<Products/>}/>
             <Route path="/create" element={<ProductsCreate/>}/>
             <Route path="/orders" element={<Orders/>}/>
             <Route path="/dashboard" element={<Dashboard/>} />

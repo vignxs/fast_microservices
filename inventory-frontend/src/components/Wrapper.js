@@ -31,6 +31,11 @@ export const Wrapper = props => {
                                 </a>
                             </li>
                             <li className="nav-item">
+                                <a className="nav-link active" aria-current="page" href="/products-list">
+                                   Product List
+                                </a>
+                            </li>
+                            <li className="nav-item">
                                 <a className="nav-link active" aria-current="page" href="/orders">
                                     Orders
                                 </a>

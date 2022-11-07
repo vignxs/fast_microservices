@@ -1,8 +1,17 @@
-from fastapi import FastAPI
+import json
+from fastapi import BackgroundTasks, Body, Depends, FastAPI, Form, Request, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, conint
+from pyparsing import Optional
 from redis_om import get_redis_connection, HashModel
+import os
+from  PIL import Image
+import secrets
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
+os. getcwd()
+app.mount('/static', StaticFiles(directory="static"), name='static')
 
 app.add_middleware(
     CORSMiddleware,
@@ -19,11 +28,16 @@ redis = get_redis_connection(
 )
 
 
+class Productimage(BaseModel):
+    name: str
+    price: int
+    quantity: int
 
 class Product(HashModel):
     name: str
     price: float
     quantity: int
+    img_url:str=None
 
     class Meta:
         database = redis
@@ -60,11 +74,33 @@ def format(pk: str):
         'price': product.price,
         'quantity': product.quantity
     }
+    
+    
 
-
-@app.post('/products')
-def create(product: Product):
-    return product.save()
+#name : Productimage =  Form(...) , file : UploadFile = File(...)) :
+@app.post('/products') #name: str = Body(...), price: int = Body(...), quantity: int =Body(...),
+async def create( name: str = Body(...), price: int = Body(...), quantity: int =Body(...), file: UploadFile = File(...)):
+    print(file)
+    path = "./static/images"
+    print(file.content_type)
+    file_ext = file.filename.split(".")[1]
+    
+    token = secrets.token_hex(10)
+    generated_name = path + token + "." + file_ext 
+    print(generated_name)
+    
+    file_content = await file.read()
+    
+    with open(generated_name , "wb") as file:
+        file.write(file_content)
+    
+    img = Image.open(generated_name)
+    img = img.resize(size=(200,200))
+    img.save(generated_name)
+    img_url = generated_name
+    file.close()
+    product = Product( name=name, price=price, quantity=quantity, img_url=img_url )
+    product.save()
 
 
 @app.get('/products/{pk}')
