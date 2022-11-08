@@ -28,16 +28,16 @@ export const ProductListing = () => {
                     <div className="row"> {
                 Products.map((product, idx) => 
 
-                    <div class="col-md-4" style={{ paddingBottom: '30px' }}>
-                        <div class="card" >
-                            <div class="card-body" style={{ borderRadius: '8px', boxShadow: '0 4px 8px 0 rgba(0,0,0,.2), 0 0 6px rgba(0,0,0,.15)' }}>
+                    <div className="col-md-4" style={{ paddingBottom: '30px' }}>
+                        <div className="card" >
+                            <div className="card-body" style={{ borderRadius: '8px', boxShadow: '0 4px 8px 0 rgba(0,0,0,.2), 0 0 6px rgba(0,0,0,.15)' }}>
                                 <div class="border-bottom card-header"> <h6 class="m-0" style={ { paddingBottom:'20px' }}> {product.name} </h6> </div>
                                 <div className="img-container">
                                     <img src={product.img_url} alt="product image " className="image card-img-top" />
                                 </div>
-                                <h6 className="card-subtitle mb-2 text-muted" style={{ textAlign:'center', paddingTop:'20px' }}> {product.price} ₹ </h6>
+                                <h6 className="card-subtitle mb-2 text-muted" style={{ textAlign:'center', paddingTop:'20px' }}> {product.price*1.2} ₹ </h6>
                                 <p className="card-text">You can get everything in life you want if you will just help enough other people get what they want </p>
-                                <a href="http://localhost:3000/orders">
+                                <a href= {"http://localhost:3000/orders/"+ product.id} >
                                     <button className="btn btn-outline-primary btn-sn"> <i className="bi bi-shop" /> Buy Now!</button>
                                 </a>
                             </div>

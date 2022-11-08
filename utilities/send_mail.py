@@ -1,7 +1,7 @@
 import smtplib
 
 
-def mail(reciever):
+def mail(reciever, refund=False):
     # creates SMTP session
     s = smtplib.SMTP('smtp.gmail.com', 587)
 
@@ -13,6 +13,8 @@ def mail(reciever):
 
     # message to be sent
     message = "Your Order recieved"
+    if refund:
+        message = "Refund Completed Sucessfully"
     # sending the mail
     s.sendmail("vignxs@gmail.com", reciever, message)
 

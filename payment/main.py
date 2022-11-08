@@ -8,6 +8,7 @@ import requests, time
 from collections import Counter
 import sys
 sys.path.append("..")
+from utilities import distance_calculate
 from utilities import send_mail
 from datetime import datetime
 
@@ -59,6 +60,7 @@ def format(pk: str):
 def all():
     dicts = [format2(pk) for pk in Order.all_pks()]
     c = Counter(player['Product'] for player in dicts).most_common(5)
+    print(dict(c))
     return dict(c)
 
 @app.get('/all_orders')
@@ -72,9 +74,16 @@ def all():
     # print(months)
     return months
     
-@app.get('/orders/{pk}')
-def get(pk: str):
-    return Order.get(pk)
+def all_orders_format(pk:str):
+    order = Order.get(pk)    
+    return { 'name': order.product_name,'quantity':order.quantity , 'total': order.total, 'status':order.status }
+    
+@app.get('/allorders')
+def get():
+    dicts = [all_orders_format(pk) for pk in Order.all_pks()]
+    print(dicts[0])
+    return dicts
+
 
 
 @app.post('/orders')
@@ -109,3 +118,8 @@ def order_completed(order: Order):
     send_mail.mail(order.email)
     redis.xadd('order_completed', order.dict(), '*')
 
+@app.get('/delivery/{pincode}')
+def get(pincode: int):
+    time = distance_calculate.time_to_deliver(pincode)
+    print(time)
+    return time

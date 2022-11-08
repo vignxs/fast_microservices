@@ -1,9 +1,8 @@
-from pathlib import Path
-import os
+import sys
+
+sys.path.append("..")
+
+from utilities import distance_calculate
 
 
-file = os.path.dirname(__file__)
-print(file)
-parent = os.path.dirname(file)
-
-print(type(parent))
+print(distance_calculate.time_to_deliver(624622))

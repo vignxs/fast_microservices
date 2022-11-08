@@ -208,3 +208,20 @@ button{
 /* .buy1{
   background: #2183a2;
 /* } * */
+
+
+
+.content1 h2 {
+  font-size: 50px;
+  letter-spacing: 1px;
+  color: #2b2b2b;
+  transform: translate(-10%, 50%)
+
+}
+
+.main1 {
+  position: absolute;
+  left: -5%;
+  top: 50%;
+  transform: translate(85%, -50%)
+}

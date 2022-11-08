@@ -11,7 +11,7 @@ import secrets
 from fastapi.staticfiles import StaticFiles
 import sys
 sys.path.append("..")
-
+from utilities import distance_calculate
 app = FastAPI()
 os. getcwd()
 app.mount('/static', StaticFiles(directory="static"), name='static')
@@ -117,8 +117,11 @@ def format_listing(pk: str):
     product = Product.get(pk)
 
     return {
+        'id': product.pk,
         'name': product.name,
         'price': product.price,
         'quantity': product.quantity,
         "img_url" : product.img_url
     }
+
+

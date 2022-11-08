@@ -11,6 +11,7 @@ export const Products = () => {
             const content = await response.json();
             setProducts(content);
             console.log(content)
+            
         })();
     }, []);
 
@@ -25,6 +26,7 @@ export const Products = () => {
     }
 
     return <Wrapper>
+        <h1 style={{ paddingTop: '20px', paddingBottom: '40px' }}>Inventory </h1>
         <div className="pt-3 pb-2 mb-3 border-bottom">
             <Link to={`/create`} className="btn btn-sm btn-outline-secondary">Add</Link>
         </div>
